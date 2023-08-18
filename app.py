@@ -1,4 +1,6 @@
 import streamlit as st
+import numpy as np
+import pandas as pd
 
 st.set_page_config(
     page_title="DocSwap",
@@ -8,17 +10,17 @@ st.set_page_config(
 )
 
 
-about_tab, details_tab, stats_tab = st.tabs(
-    ["ℹ️ About", "📝 Details", "📈 Stats"]
-)
+about_tab, details_tab, stats_tab = st.tabs(["ℹ️ About", "📝 Details", "📈 Stats"])
 
 with about_tab:
-    st.header('Welecome to DocSwap')
+    st.header("Welecome to DocSwap")
 
-    st.markdown("""
+    st.markdown(
+        """
                 ### What is it?
                     SwapDoc uses an optimisation algorithim to find the best multi-party swaps. 
-                """)
+                """
+    )
 
     st.markdown(
         """
@@ -29,3 +31,12 @@ with about_tab:
                 4. I will not sell this information and I will not use it for anything other than finding viable swapping partners for the users of this app.
                 """
     )
+
+with details_tab:
+    st.button("test")
+
+
+with stats_tab:
+    chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+
+    st.bar_chart(chart_data)
