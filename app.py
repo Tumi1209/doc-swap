@@ -11,19 +11,82 @@ st.set_page_config(
 
 tab1, tab2, tab3  = st.tabs(["Swap", "Stats", "About"])
 
-with tab1.expander("🔍 Find a swap?", expanded=True):
+with tab1.expander("🔍 Find a SwapGroup?", expanded=False):
+    st.markdown("""
+            🚨 **IMPORTANT:** DocSwap only works for **MBChB** students who are going into their **first** year of internship. We apologise for any inconvenience caused, this is version 1 of DocSwap and we aim to improve it in the future.
+    
+        """)    
+    st.markdown("""Please also read the `About` tab to learn about DocSwap before finding a SwapGroup""")
+
+
+    st.markdown("""
+
+            #### 🤔 Please confirm the following:
+        """)
+
+
+    mbchb = st.checkbox('I studied MBChB.')
+    intern1 = st.checkbox('I am going into my first year of internship.')
+    disclaimer = st.checkbox('I have read the disclaimer in the `About` tab **and** the notice above.')
+
+    if mbchb and intern1 and disclaimer:
+        st.markdown(""" Please provide your choices in this [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkWmsBrxna_T49ZgENPM_1ebKTX7QdFJANArf9SRWLVGXmLw/viewform?usp=sf_link) and we will email you if we find a valid SwapGroup for you!""")
+        st.markdown("""Good Luck! 🏆🏆🏆""")
+
+with tab1.expander("😓 I cant remember my choices", expanded=False):
+
+    email = st.text_input('Fill in the email address you used to submit your choices')
+
+    if st.button("Find my choices"):
+        st.success("We found your choices!")
+
+
+with tab1.expander("👀 I want to change my choices", expanded=False):
+    
+    deletion = st.checkbox('I understand that my old choices will be deleted if I change my choices now.')
+
+    if deletion:
+        st.markdown(""" Please provide your **UPDATED** choices in this [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkWmsBrxna_T49ZgENPM_1ebKTX7QdFJANArf9SRWLVGXmLw/viewform?usp=sf_link) and we will email you if we find a valid SwapGroup for you!""")
+
+with tab1.expander("🤕 I need to resubmit", expanded=False):
     st.write("swap page")
 
 
 
 with tab2:
-    st.header("Swap summary statistics")
 
+    metrics_container = st.container()
+    with metrics_container:
+        col1,col2,col3,col4 = st.columns(4)
+
+        col1.metric("Swappers on DocSwap", 200)
+        col2.metric("Successful Swaps", 85)
+        col3.metric("Failed Swaps", 13)
+        col4.metric("Next Refresh", '1h 3m', help="The stats on this page are updated every 30 minutes")
+
+    st.divider()
+    charts_container = st.container()
+    with charts_container:
+        chart_data = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=["a", "b", "c"])
+
+        st.header("Number of posts available for swap at each Hospital")
+        st.bar_chart(chart_data)
+
+        st.divider()
+
+        chart_data2 = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=["First Choice", "Seecond Choice", "Third Choice"])
+
+        st.header("Number of choices per hosipital")
+        st.bar_chart(chart_data2)
 
 with tab3.expander("🤔 How does DocSwap work?", expanded=False):
 
     st.markdown("""
-                DocSwap uses placement data from medical interns paired with a powerful optimisation algorithm to find multi-party swaps. If that sounds like gibberish to you then have a look at the explanation below.
+                DocSwap uses placement data from medical interns paired with a powerful optimisation algorithm to find multi-party swaps (known as SwapGroups). If that sounds like gibberish to you then have a look at the explanation below.
                 """)
     
     st.divider()
@@ -45,7 +108,7 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
         with col2:
 
             st.markdown("""
-                        Most swaps are typically done on Facebook or WhatsApp groups, one of the biggest challenges with this is that you cannot keep track of everyone's choices and so it can be tough to accomplish swaps with more than 3 people.
+                        Most swaps are typically done on Facebook or WhatsApp groups, one of the biggest challenges with this is that you cannot keep track of everyone's choices and so it can be tough to coordinate swaps with more than 3 people.
 
                         Consider a 3-party swap:
                         
@@ -53,7 +116,7 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
                         - So Person A would not consider Swapping with Person B as they would not get their choice in return. 
                         - If Person B could find a third Person with willing to swap with them for Person A's choice they could then Swap with Person A and all 3 parties would be satisfied.
 
-                        On the right we have a diagram of a 5-party swap, imagine the logistical nightmare to achieve this considering none of them can directly swap with each other
+                        On the left we have a diagram of a 5-party swap, imagine the logistical nightmare to achieve this considering none of them can directly swap with each other
                     """)
         st.divider()  
 
