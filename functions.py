@@ -126,3 +126,20 @@ def time_until_specified_time(target_time):
     minutes = remainder // 60
     time_format = f"{minutes:02d}min"
     return time_format
+
+
+@st.cache_resource(
+    ttl="1h",
+    max_entries=1,
+)
+def get_latest_record_per_email(df):
+    # Convert the timestamp column to datetime if not already
+    df["timestamp"] = pd.to_datetime(df["timestamp"])
+
+    # Sort the DataFrame by email and timestamp
+    df.sort_values(by=["email", "timestamp"], ascending=[True, False], inplace=True)
+
+    # Group by email and select the first record in each group (latest due to sorting)
+    latest_records = df.groupby("email").first().reset_index()
+
+    return latest_records

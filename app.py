@@ -10,11 +10,13 @@ st.set_page_config(
 )
 
 gs_connection = connect_to_gs(st.secrets["gcp_service_account"])
-swap_data = fetch_swap_data(gs_connection, find_swap_table, prod_google_sheet_key, [])
+all_swap_data = fetch_swap_data(
+    gs_connection, find_swap_table, prod_google_sheet_key, []
+)
+latest_swap_data = get_latest_record_per_email(all_swap_data)
+unique_users = count_unique_values(all_swap_data, "email")
 
-unique_users = count_unique_values(swap_data, "email")
-
-pivot_choices = pivot_and_rename_choices(swap_data)
+pivot_choices = pivot_and_rename_choices(latest_swap_data)
 
 update_time = time_since_last_update()
 
@@ -53,24 +55,18 @@ with tab1.expander("🔍 Find a SwapGroup?", expanded=False):
         )
         st.markdown("""Good Luck! 🏆🏆🏆""")
 
-with tab1.expander("😓 I cant remember my choices", expanded=False):
-    email = st.text_input("Fill in the email address you used to submit your choices")
 
-    if st.button("Find my choices"):
-        st.success("We found your choices!")
-
-    st.write("ℹ️ Tip: you can also use this to see if your choices were recorded")
-
-with tab1.expander("👀 I want to change my choices", expanded=False):
-    deletion = st.checkbox(
-        "I understand that my old choices will be deleted if I change my choices now."
+with tab1.expander("🚨 Disclaimer", expanded=True):
+    st.markdown(
+        """
+                1. Swaps are not guaranteed.
+                2. Swaps require **everyone** in a SwapGroup to participate, if anyone in a SwapGroup backs out, the group will be invalid and you will need to resubmit your choices so that you can be paired with another SwapGroup.
+                3. DocSwap **does not** manage the logistics of the swap, we simply connect you to a group of valid swappers.
+                4. It is up to you to lias with your SwapGroup via WhatsApp, Email etc... to finalise the swaps.
+                5. DocSwap receives no monetary incentive for this service nor does it sell user information.
+                6. We take no responsibility for failed swaps or administration errors.
+        """
     )
-
-    if deletion:
-        st.markdown(
-            """ Please provide your **UPDATED** choices in this [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkWmsBrxna_T49ZgENPM_1ebKTX7QdFJANArf9SRWLVGXmLw/viewform?usp=sf_link) and we will email you if we find a valid SwapGroup for you!"""
-        )
-
 
 with tab2:
     metrics_container = st.container()
@@ -91,7 +87,7 @@ with tab2:
         "👀 See which posts people are swapping?", expanded=False
     ):
         hist = (
-            alt.Chart(swap_data)
+            alt.Chart(latest_swap_data)
             .mark_bar()
             .configure_mark(color="#A398F0")
             .encode(
@@ -106,7 +102,6 @@ with tab2:
         st.altair_chart(hist, use_container_width=True)
 
     with charts_container.expander("🔥 See the most popular hospitals", expanded=False):
-        st.header("Most Popular Hospitals")
         domain = ["First Choice", "Second Choice", "Third Choice"]
         range_ = ["#A398F0", "#F2E4FB", "#480F6C"]
 
@@ -130,11 +125,15 @@ with tab2:
 with tab3.expander("🤔 How does DocSwap work?", expanded=False):
     st.markdown(
         """
-                DocSwap uses placement data from medical interns paired with a powerful optimisation algorithm to find multi-party swaps (known as SwapGroups). If that sounds like gibberish to you then have a look at the explanation below.
-                """
+    #### TLDR: 
+    
+    We collect placements and top 3 choices of 1st year internship students from all over the country, we then use a program to find people with matching placement/choices and connect them via email. This is done between 2 and 8 people, and we give priority to swaps where more people get their first choice. 
+    
+    """
     )
-
     st.divider()
+    st.markdown("""#### Technical Details:""")
+
     swap_1 = Image.open("diagrams/5wayswap.png")
     swap_2 = Image.open("diagrams/5way2choice.png")
     swap_3 = Image.open("diagrams/8wayswap.png")
@@ -206,18 +205,6 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
                     """
             )
 
-
-with tab3.expander("🚨 Disclaimer", expanded=True):
-    st.markdown(
-        """
-                1. Swaps are not guaranteed.
-                2. Swaps require **everyone** in a SwapGroup to participate, if anyone in a SwapGroup backs out, the group will be invalid and you will need to resubmit your choices so that you can be paired with another SwapGroup.
-                3. DocSwap **does not** manage the logistics of the swap, we simply connect you to a group of valid swappers.
-                4. It is up to you to lias with your SwapGroup via WhatsApp, Email etc... to finalise the swaps.
-                5. DocSwap receives no monetary incentive for this service nor does it sell user information. We are simply a group that knows how to code and wants to help.
-                6. We take no responsibility for failed swaps or administration errors.
-        """
-    )
 
 with tab3.expander("💬 FAQ", expanded=False):
     st.markdown(
