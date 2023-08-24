@@ -5,7 +5,7 @@ import streamlit as st
 from datetime import datetime, timedelta
 import gspread
 from google.oauth2 import service_account
-import matplotlib.pyplot as plt
+import base64
 
 
 # function to create api connection to google sheets
@@ -143,3 +143,22 @@ def get_latest_record_per_email(df):
     latest_records = df.groupby("email").first().reset_index()
 
     return latest_records
+
+
+def render_svg(path, width=None, height=None, caption=None):
+    with open(path, "r") as f:
+        svg_content = f.read()
+
+    b64_svg = base64.b64encode(svg_content.encode("utf-8")).decode("utf-8")
+
+    style = ""
+    if width is not None:
+        style += f"width: {width}%;"
+    if height is not None:
+        style += f"height: {height}%;"
+
+    img_tag = f'<img src="data:image/svg+xml;base64,{b64_svg}" style="{style}"/>'
+
+    st.write(img_tag, unsafe_allow_html=True)
+    if caption is not None:
+        st.caption(caption)

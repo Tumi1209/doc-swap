@@ -1,6 +1,5 @@
 from functions import *
 from configs import *
-from PIL import Image
 
 st.set_page_config(
     page_title="DocSwap",
@@ -32,21 +31,17 @@ with tab1.expander("🔍 Find a SwapGroup?", expanded=False):
     
         """
     )
-    st.markdown(
-        """Please also read the `About` tab to learn about DocSwap before finding a SwapGroup"""
-    )
 
     st.markdown(
         """
-
-            #### 🤔 Please confirm the following:
+            #### 🤔 Please confirm the following to submit your choices:
         """
     )
 
     mbchb = st.checkbox("I studied MBChB.")
     intern1 = st.checkbox("I am going into my first year of internship.")
     disclaimer = st.checkbox(
-        "I have read the disclaimer in the `About` tab **and** the notice above."
+        "I have read the disclaimer below tab **and** the notice above."
     )
 
     if mbchb and intern1 and disclaimer:
@@ -134,10 +129,6 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
     st.divider()
     st.markdown("""#### Technical Details:""")
 
-    swap_1 = Image.open("diagrams/5wayswap.png")
-    swap_2 = Image.open("diagrams/5way2choice.png")
-    swap_3 = Image.open("diagrams/8wayswap.png")
-
     row1 = st.container()
     row2 = st.container()
     row3 = st.container()
@@ -149,8 +140,14 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
         ) = st.columns(2)
 
         with col1:
-            st.image(swap_1, caption="5-party swap")
-
+            image_container = st.container()
+            with image_container:
+                render_svg(
+                    "diagrams/5wayswap.svg",
+                    width=90,
+                    height=None,
+                    caption=None,
+                )
         with col2:
             st.markdown(
                 """
@@ -174,7 +171,14 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
         ) = st.columns(2)
 
         with col3:
-            st.image(swap_2, caption="5-party swap with 2 choices each")
+            image_container = st.container()
+            with image_container:
+                render_svg(
+                    "diagrams/5wayswap2choice.svg",
+                    width=90,
+                    height=None,
+                    caption=None,
+                )
 
         with col4:
             st.markdown(
@@ -192,7 +196,14 @@ with tab3.expander("🤔 How does DocSwap work?", expanded=False):
         ) = st.columns(2)
 
         with col5:
-            st.image(swap_3, caption="8-party swap with 2 choices each")
+            image_container = st.container()
+            with image_container:
+                render_svg(
+                    "diagrams/8wayswap.svg",
+                    width=90,
+                    height=None,
+                    caption=None,
+                )
 
         with col6:
             st.markdown(
