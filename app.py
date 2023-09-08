@@ -103,6 +103,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
                         If we think about a swap visually, it's essentially just a closed loop between a group of people. It doesn't matter how many people are in the loop as long as is closed. DocSwap uses your current placement and your three choices to find loops for you. This also allows for much bigger swaps, the biggest swap I've managed to simulate was a 28-way swap, but typically they are around 5-10 people. 
                         """
             )
+            st.markdown("### ")
         st.divider()
 
     with row2:
@@ -128,6 +129,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
 
                 """
             )
+        st.markdown("### ")
         st.divider()
 
     with row3:
