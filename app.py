@@ -198,7 +198,7 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
 
     st.markdown(
         """
-                **Q: Will submitting mutliple times give me more choices or better odds and finding a SwapGroup**\n
+                **Q: Will submitting mutliple times give me more choices or better odds at finding a SwapGroup**\n
                 A: No, I only take the latest submission per user.
         """
     )
