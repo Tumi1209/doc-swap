@@ -205,6 +205,15 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
 
     st.divider()
 
+
+with tab2.expander("📞 Contact me?", expanded=False):
+    st.markdown(
+        """
+                Reach out using this [FORM](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) and I'll get back to you when I can.
+
+        """
+    )
+
 # gs_connection = connect_to_gs(st.secrets["gcp_service_account"])
 # all_swap_data = fetch_swap_data(
 #     gs_connection, find_swap_table, prod_google_sheet_key, []
