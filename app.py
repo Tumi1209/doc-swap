@@ -151,7 +151,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
 
         with col6:
             st.markdown(
-                """ When we add more people and give each person multiple choices, the number of closed loops we can create becomes exponentially higher. In this image alone we can create 20 closed loops.\nSo how does DocSwap decide on the best loop? Well we give each arrow a weight corresponding to your choice number (eg. choice 1 will get a weight of 1 and choice 2 will get a weight of 2...) and we find the loops with the lowest total weight! Meaning that higher choices are prioritised.
+                """ When we add more people and give each person multiple choices, the number of closed loops we can create becomes exponentially higher. In this image alone we can create 22 closed loops.\nSo how does DocSwap decide on the best loop? Well we give each arrow a weight corresponding to your choice number (eg. choice 1 will get a weight of 1 and choice 2 will get a weight of 2...) and we find the loops with the lowest total weight! Meaning that higher choices are prioritised.
                 """
             )
 
