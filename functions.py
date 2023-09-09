@@ -45,8 +45,8 @@ def write_google_sheets_data(_gc, df, sheet_name, sheet_key):
         return None
 
 
-@st.cache_resource(
-    ttl="1h",
+@st.cache_data(
+    ttl="15m",
     max_entries=1,
 )
 def fetch_swap_data(_gc, sheet_name, sheet_key, columns_list):
@@ -76,6 +76,48 @@ def fetch_swap_data(_gc, sheet_name, sheet_key, columns_list):
     except Exception as e:
         print("An error occurred:", e)
         return None
+
+
+@st.cache_data(
+    ttl="15m",
+    max_entries=1,
+)
+def fetch_status_data(_gc, sheet_name, sheet_key, columns_list):
+    try:
+        # Open specific sheet
+        gs = _gc.open_by_key(sheet_key)
+
+        # Open specific tab within the sheet
+        tab = gs.worksheet(sheet_name)
+
+        data = tab.get_all_values()
+        headers = data.pop(0)
+        df = pd.DataFrame(data, columns=headers)
+
+        # to handle numeric columns that are imported as strings
+        for column in columns_list:
+            df[column] = pd.to_numeric(df[column])
+
+        return df
+
+    except gspread.exceptions.APIError as e:
+        print("Error accessing Google Sheets API:", e)
+        return None
+    except gspread.exceptions.WorksheetNotFound as e:
+        print("Error: Worksheet not found:", e)
+        return None
+    except Exception as e:
+        print("An error occurred:", e)
+        return None
+
+
+def count_unique_values_swapped_yes(df, column_name):
+    if column_name not in df.columns:
+        raise ValueError(f"Column '{column_name}' not found in the DataFrame.")
+
+    filtered_df = df[df["swapped"] == "yes"]
+    unique_values = filtered_df[column_name].nunique()
+    return unique_values
 
 
 def count_unique_values(df, column_name):
@@ -112,7 +154,7 @@ def pivot_and_rename_choices(df):
     return choices_df
 
 
-@st.cache_data(ttl="1h", max_entries=1)
+@st.cache_data(ttl="15m", max_entries=1)
 def time_since_last_update():
     time_plus_1_hours = datetime.now() + timedelta(hours=1)
     return time_plus_1_hours
@@ -128,8 +170,8 @@ def time_until_specified_time(target_time):
     return time_format
 
 
-@st.cache_resource(
-    ttl="1h",
+@st.cache_data(
+    ttl="15m",
     max_entries=1,
 )
 def get_latest_record_per_email(df):
@@ -162,3 +204,4 @@ def render_svg(path, width=None, height=None, caption=None):
     st.write(img_tag, unsafe_allow_html=True)
     if caption is not None:
         st.caption(caption)
+    st.write("""### """)

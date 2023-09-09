@@ -9,11 +9,16 @@ st.set_page_config(
 )
 
 
-# gs_connection = connect_to_gs(st.secrets["gcp_service_account"])
-# all_swap_data = fetch_swap_data(
-#     gs_connection, find_swap_table, prod_google_sheet_key, []
-# )
-# latest_swap_data = get_latest_record_per_email(all_swap_data)
+gs_connection = connect_to_gs(st.secrets["gcp_service_account"])
+all_swap_data = fetch_swap_data(
+    gs_connection, find_swap_table, prod_google_sheet_key, []
+)
+user_status_data = fetch_status_data(
+    gs_connection, status_table, prod_google_sheet_key, []
+)
+latest_swap_data = get_latest_record_per_email(all_swap_data)
+unique_users = count_unique_values(all_swap_data, "email")
+unique_swaps = count_unique_values_swapped_yes(user_status_data, "email")
 
 st.header("Welcome to DocSwap!")
 
@@ -42,26 +47,37 @@ with tab1.expander("🔍 Find a SwapGroup", expanded=False):
             """ Please provide your choices in this [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkWmsBrxna_T49ZgENPM_1ebKTX7QdFJANArf9SRWLVGXmLw/viewform?usp=sf_link). You will get an email from us if we find a valid swap for you!"""
         )
 
-# with tab1.expander("📊 Swap Statistics", expanded=False):
-#     st.write("Number of people using DocSwap")
-#     st.write("Number of people that found a swap")
-#     st.write("Number of people using DocSwap")
-
-#     charts_container = st.container()
-#     with charts_container:
-#         hist = (
-#             alt.Chart(latest_swap_data)
-#             .mark_bar()
-#             .configure_mark(color="#A398F0")
-#             .encode(
-#                 alt.X(
-#                     "current_placement:O", axis=alt.Axis(title="Hospital"), sort="-y"
-#                 ),
-#                 alt.Y("count():Q", axis=alt.Axis(title="Number of Posts")),
-#                 alt.Order("count():Q", sort="descending"),
-#             )
-#         )
-#         st.altair_chart(hist, use_container_width=True)
+with tab1.expander("📊 Swap Statistics", expanded=False):
+    space1, column, space2 = st.columns([0.1, 0.8, 0.1])
+    with column:
+        metrics_container = st.container()
+        with metrics_container:
+            col1, col2 = st.columns(2)
+            col1.metric("Doctors on DocSwap", unique_users)
+            col2.metric("Successful Swaps", unique_swaps)
+        st.markdown("""#### """)
+        charts_container = st.container()
+        with charts_container:
+            hist = (
+                alt.Chart(
+                    latest_swap_data, title="Number of Posts per Hospital on DocSwap"
+                )
+                .mark_bar()
+                .configure_mark(color="#A398F0")
+                .encode(
+                    alt.X("count():Q", axis=alt.Axis(title="Number of Posts")),
+                    alt.Y(
+                        "current_placement:O",
+                        axis=alt.Axis(title="Hospital"),
+                        sort="-x",
+                    ),
+                    alt.Order("count():Q", sort="descending"),
+                )
+            )
+            st.altair_chart(
+                hist,
+                use_container_width=True,
+            )
 
 
 with tab1.expander("🚨 Disclaimer", expanded=True):
@@ -100,7 +116,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
         with col2:
             st.markdown(
                 """
-                        If we think about a swap visually, it's essentially just a closed loop between a group of people. It doesn't matter how many people are in the loop as long as is closed. DocSwap uses your current placement and your three choices to find loops for you. This also allows for much bigger swaps, the biggest swap I've managed to simulate was a 28-way swap, but typically they are around 5-10 people. 
+                        If we think about a swap visually, it's essentially just a closed loop between a group of people. It doesn't matter how many people are in the loop as long as its closed. DocSwap uses your current placement and your three choices to find loops for you. This also allows for much bigger swaps. The biggest swap we've managed to simulate was a 28-way swap, but typically they are around 2-10 people. 
                         """
             )
         st.markdown("### ")
@@ -156,7 +172,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
             )
 
         st.markdown(
-            "This also means loops might not contain everyones first choice, since you might need someones third choice to close the loop. So you're probably wondering how you can beat the system? Well I'll tell you, if you are really set on a specific hospital you can choose that hospital for all 3 of your choices... But there's a catch, in doing this you significantly reduce the number of people you can swap with and so your chances of finding a swap group also decrease."
+            "This also means loops might not contain everyones first choice, since you might need someones third choice to close the loop. So you're probably wondering how you can beat the system? Well we'll tell you, if you are really set on a specific hospital you can choose that hospital for all 3 of your choices... But there's a catch, in doing this you significantly reduce the number of people you can swap with and so your chances of finding a swap group also decrease."
         )
 
 with tab2.expander("💬 Frequently Asked Questions", expanded=False):
@@ -172,7 +188,7 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
     st.markdown(
         """
                 **Q: I have already swapped but feel I can still do better, can I swap again?**\n
-                A: Yes you can swap as many times as you want, just make sure you re apply with your latest placement.
+                A: Yes, you can swap as many times as you want, just make sure you re apply with your latest placement.
         """
     )
 
@@ -190,7 +206,7 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
     st.markdown(
         """
                 **Q: Do you sell our email addresses or other data?**\n
-                A: No, this was a hobby project for me, I am not making any money off DocSwap.
+                A: No, all information is confidential.
         """
     )
 
@@ -202,8 +218,6 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
                 A: No, I only take the latest submission per user.
         """
     )
-
-    st.divider()
 
 
 with tab2.expander("📞 Contact me?", expanded=False):
