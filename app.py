@@ -20,7 +20,18 @@ latest_swap_data = get_latest_record_per_email(all_swap_data)
 unique_users = count_unique_values(all_swap_data, "email")
 unique_swaps = count_unique_values_swapped_yes(user_status_data, "email")
 
-st.header("Welcome to DocSwap!")
+
+st.markdown(
+    """
+            #### Welcome to DocSwap! 👋
+
+            ⏳ DocSwap will officially open once the 2024  internship placements are out.
+
+            👀 In the meantime, feel free to look around or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link).
+
+            🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
+            """
+)
 
 tab1, tab2 = st.tabs(["Swap", "Info"])
 
@@ -175,11 +186,11 @@ with tab2.expander("🤔 How does DocSwap work?"):
             "This also means loops might not contain everyones first choice, since you might need someones third choice to close the loop. So you're probably wondering how you can beat the system? Well we'll tell you, if you are really set on a specific hospital you can choose that hospital for all 3 of your choices... But there's a catch, in doing this you significantly reduce the number of people you can swap with and so your chances of finding a swap group also decrease."
         )
 
-with tab2.expander("💬 Frequently Asked Questions", expanded=False):
+with tab2.expander("💬 Frequently asked questions", expanded=False):
     st.markdown(
         """
-                **Q: Someone in my SwapGroup decided they no longer wanted to swap.**\n
-                A: You will all need to re apply to find another SwapGroup.
+                **Q: Someone in my SwapGroup decided they no longer wanted to swap. What should I do now?**\n
+                A: Everyone in the SwapGroup will need to re-apply on the Swap page so that we can find alternative SwapGroups for you.
         """
     )
 
@@ -188,7 +199,7 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
     st.markdown(
         """
                 **Q: I have already swapped but feel I can still do better, can I swap again?**\n
-                A: Yes, you can swap as many times as you want, just make sure you re apply with your latest placement.
+                A: Yes, you can swap as many times as you want, just make sure you re-apply with your latest placement.
         """
     )
 
@@ -220,10 +231,10 @@ with tab2.expander("💬 Frequently Asked Questions", expanded=False):
     )
 
 
-with tab2.expander("📞 Contact me?", expanded=False):
+with tab2.expander("📞 Contact us?", expanded=False):
     st.markdown(
         """
-                Reach out using this [FORM](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) and I'll get back to you when I can.
+                Reach out using this [FORM](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) and we'll get back to you.
 
         """
     )
