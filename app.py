@@ -27,9 +27,11 @@ st.markdown(
 
             ⏳ DocSwap will officially open once the 2024  internship placements are out.
 
-            👀 In the meantime, feel free to look around or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link).
-
             🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
+
+            👀 In the meantime, feel free to check out the info tab to see how DocSwap works or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) if you have any questions.
+
+
             """
 )
 
