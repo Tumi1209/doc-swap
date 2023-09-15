@@ -20,20 +20,24 @@ latest_swap_data = get_latest_record_per_email(all_swap_data)
 unique_users = count_unique_values(all_swap_data, "email")
 unique_swaps = count_unique_values_swapped_yes(user_status_data, "email")
 
-
 st.markdown(
     """
-            #### Welcome to DocSwap! 👋
-
-            ⏳ DocSwap will officially open once the 2024  internship placements are out.
-
-            🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
-
-            👀 In the meantime, feel free to check out the info tab to see how DocSwap works or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) if you have any questions.
-
-
-            """
+             #### Welcome to DocSwap! 👋"""
 )
+
+# st.markdown(
+#     """
+#             #### Welcome to DocSwap! 👋
+
+#             ⏳ DocSwap will officially open once the 2024  internship placements are out.
+
+#             🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
+
+#             👀 In the meantime, feel free to check out the info tab to see how DocSwap works or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) if you have any questions.
+
+
+#             """
+# )
 
 tab1, tab2 = st.tabs(["Swap", "Info"])
 
@@ -57,7 +61,7 @@ with tab1.expander("🔍 Find a SwapGroup", expanded=False):
 
     if mbchb and intern1 and disclaimer:
         st.markdown(
-            """ Please provide your choices in this [Google form](https://docs.google.com/forms/d/e/1FAIpQLSfkWmsBrxna_T49ZgENPM_1ebKTX7QdFJANArf9SRWLVGXmLw/viewform?usp=sf_link). You will get an email from us if we find a valid swap for you!"""
+            """ Please provide your choices in this [Google form](https://forms.gle/1DggkBb6x2nwJCXC7). You will get an email from us if we find a valid swap for you!"""
         )
 
 with tab1.expander("📊 Swap Statistics", expanded=False):
