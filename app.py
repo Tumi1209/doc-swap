@@ -61,7 +61,7 @@ with tab1.expander("🔍 Find a SwapGroup", expanded=False):
 
     if mbchb and intern1 and disclaimer:
         st.markdown(
-            """ Please provide your choices in this [Google form](https://forms.gle/1DggkBb6x2nwJCXC7). You will get an email from us if we find a valid swap for you!"""
+            """ Please provide your choices in this [Google form](https://forms.gle/4KQngeC985o782fL6). You will get an email from us if we find a valid swap for you!"""
         )
 
 with tab1.expander("📊 Swap Statistics", expanded=False):
