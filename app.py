@@ -69,9 +69,13 @@ with tab1.expander("📊 Swap Statistics", expanded=False):
     with column:
         metrics_container = st.container()
         with metrics_container:
-            col1, col2 = st.columns(2)
-            col1.metric("Doctors on DocSwap", unique_users)
-            col2.metric("Successful Swaps", unique_swaps)
+            render_svg_banner(
+                "diagrams/stats_banner.svg",
+                width=100,
+                height=100,
+                swappers=unique_users,
+                emails=unique_swaps,
+            )
         st.markdown("""#### """)
         charts_container = st.container()
         with charts_container:
