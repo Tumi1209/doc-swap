@@ -170,11 +170,27 @@ def time_until_specified_time(target_time):
     return time_format
 
 
-@st.cache_data(
-    ttl="15m",
-    max_entries=1,
-)
-def get_latest_record_per_email(df):
+# @st.cache_data(
+#     ttl="15m",
+#     max_entries=1,
+# )
+# def get_latest_record_per_email(df):
+#     # Convert the timestamp column to datetime if not already
+#     df["timestamp"] = pd.to_datetime(df["timestamp"])
+
+#     # Sort the DataFrame by email and timestamp
+#     df.sort_values(by=["email", "timestamp"], ascending=[True, False], inplace=True)
+
+#     # Group by email and select the first record in each group (latest due to sorting)
+#     latest_records = df.groupby("email").first().reset_index()
+
+#     return latest_records
+
+
+def get_latest_record_per_email(df, df_swapped):
+    # Filter out records where swapped = 'yes' in the second DataFrame
+    df_swapped_filtered = df_swapped[df_swapped["swapped"] != "yes"]
+
     # Convert the timestamp column to datetime if not already
     df["timestamp"] = pd.to_datetime(df["timestamp"])
 
@@ -184,7 +200,12 @@ def get_latest_record_per_email(df):
     # Group by email and select the first record in each group (latest due to sorting)
     latest_records = df.groupby("email").first().reset_index()
 
-    return latest_records
+    # Filter the first DataFrame to include only emails present in the filtered second DataFrame
+    latest_records_filtered = latest_records[
+        latest_records["email"].isin(df_swapped_filtered["email"])
+    ]
+
+    return latest_records_filtered
 
 
 def render_svg(path, width=None, height=None, caption=None):
