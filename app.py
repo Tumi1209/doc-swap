@@ -153,7 +153,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
             with image_container:
                 render_svg(
                     "diagrams/5wayswap.svg",
-                    width=90,
+                    width=None,
                     height=None,
                     caption=None,
                 )
