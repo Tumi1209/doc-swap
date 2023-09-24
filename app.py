@@ -129,8 +129,8 @@ with tab1:
     )
 
     render_svg(
-        "diagrams/teleqr.svg",
-        width=25,
+        "diagrams/finalqr.svg",
+        width=50,
         height=None,
         caption=None,
     )
