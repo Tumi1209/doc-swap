@@ -129,7 +129,7 @@ with tab1:
     )
 
     render_svg(
-        "diagrams/telegramqr.svg",
+        "diagrams/teleqr.svg",
         width=25,
         height=None,
         caption=None,
