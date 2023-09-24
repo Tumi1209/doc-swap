@@ -115,25 +115,27 @@ with tab1.expander("🚨 Disclaimer", expanded=False):
     """
     )
 
-with tab1:
-    st.markdown(
-        """
-        ###
-                            """
-    )
+with tab1.expander("💬 Telegram", expanded=False):
+    space1, column, space2 = st.columns([0.1, 0.8, 0.1])
+    with column:
+        st.markdown(
+            """
+            ###
+                                """
+        )
 
-    st.markdown(
-        """
-                #### Message us on [Telegram!](https://t.me/DocSwapZA)
-                                    """
-    )
+        st.markdown(
+            """
+                    #### Message us on [Telegram!](https://t.me/DocSwapZA)
+                                        """
+        )
 
-    render_svg(
-        "diagrams/finalqr.svg",
-        width=50,
-        height=None,
-        caption=None,
-    )
+        render_svg(
+            "diagrams/finalqr.svg",
+            width=100,
+            height=None,
+            caption=None,
+        )
 
 
 with tab2.expander("🤔 How does DocSwap work?"):
@@ -153,7 +155,7 @@ with tab2.expander("🤔 How does DocSwap work?"):
             with image_container:
                 render_svg(
                     "diagrams/5wayswap.svg",
-                    width=None,
+                    width=90,
                     height=None,
                     caption=None,
                 )
