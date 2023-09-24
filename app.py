@@ -105,7 +105,7 @@ with tab1.expander("📊 Swap Statistics", expanded=False):
             )
 
 
-with tab1.expander("🚨 Disclaimer", expanded=True):
+with tab1.expander("🚨 Disclaimer", expanded=False):
     st.markdown(
         """
             1. Swaps are not guaranteed.
@@ -113,6 +113,26 @@ with tab1.expander("🚨 Disclaimer", expanded=True):
             3. DocSwap does not manage the logistics of the swap, we simply connect you to a group of valid swappers. You will still need to complete the necessary adminstrative procedures to formalise your swap.
             4. DocSwap takes no responsibility for failed swaps.
     """
+    )
+
+with tab1:
+    st.markdown(
+        """
+        ###
+                            """
+    )
+
+    st.markdown(
+        """
+                #### Message us on [Telegram!](https://t.me/DocSwapZA)
+                                    """
+    )
+
+    render_svg(
+        "diagrams/telegramqr.svg",
+        width=25,
+        height=None,
+        caption=None,
     )
 
 
