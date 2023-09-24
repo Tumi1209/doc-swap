@@ -221,6 +221,15 @@ with tab2.expander("💬 Frequently asked questions", expanded=False):
 
     st.markdown(
         """
+                **Q: Does DocSwap work for other degrees or comm serve?**\n
+                A: At the moment no. However, we can set up a custom version to work for a different degree if there is enough demand. Message us on [Telegram](https://t.me/DocSwapZA) if you want to chat more on this.
+        """
+    )
+
+    st.divider()
+
+    st.markdown(
+        """
                 **Q: How does DocSwap make money?**\n
                 A: It doesn't.
         """
