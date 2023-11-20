@@ -99,15 +99,17 @@ with tab1.expander("📊 Swap Statistics", expanded=False):
                     alt.Order("count():Q", sort="descending"),
                 )
             )
-
-            st.subheader(
-                "Posts still available for swapping",
-                help="The number people at each hospital who are still looking to swap their post. When a swap is found for a given post, it will be removed from this chart, if a person joins DocSwap their post will be added to this chart. If you are not finding any swaps for your choices, check this chart to see if any posts are available at those hospitals.",
-            )
-            st.altair_chart(
-                hist,
-                use_container_width=True,
-            )
+            if len(latest_swap_data.current_placement) > 0:
+                st.subheader(
+                    "Posts still available for swapping",
+                    help="The number people at each hospital who are still looking to swap their post. When a swap is found for a given post, it will be removed from this chart, if a person joins DocSwap their post will be added to this chart. If you are not finding any swaps for your choices, check this chart to see if any posts are available at those hospitals.",
+                )
+                st.altair_chart(
+                    hist,
+                    use_container_width=True,
+                )
+            if len(latest_swap_data.current_placement) == 0:
+                st.info("All swaps completed")
 
 
 with tab1.expander("🚨 Disclaimer", expanded=False):
