@@ -70,13 +70,18 @@ with tab1.expander("📊 Swap Statistics", expanded=False):
     with column:
         metrics_container = st.container()
         with metrics_container:
-            render_svg_banner(
-                "diagrams/stats_banner.svg",
-                width=100,
-                height=100,
-                swappers=unique_users,
-                emails=unique_swaps,
-            )
+            if unique_swaps > 0:
+                render_svg_banner(
+                    "diagrams/stats_banner.svg",
+                    width=100,
+                    height=100,
+                    swappers=unique_users,
+                    emails=unique_swaps,
+                )
+            else:
+                st.info(
+                    "A chart will display once more people have submitted their choices"
+                )
         st.markdown("""#### """)
         charts_container = st.container()
         with charts_container:
