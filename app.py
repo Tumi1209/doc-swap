@@ -21,24 +21,24 @@ unique_users = count_unique_values(all_swap_data, "email")
 unique_swaps = count_unique_values_swapped_yes(user_status_data, "email")
 
 
-# st.markdown(
-#     """
-#              #### Welcome to DocSwap! 👋"""
-# )
-
 st.markdown(
     """
-            #### Welcome to DocSwap! 👋
-
-            ⏳ DocSwap will officially open once the 2024  internship placements are out.
-
-            🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
-
-            👀 In the meantime, feel free to check out the info tab to see how DocSwap works or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) if you have any questions.
-
-
-            """
+             #### Welcome to DocSwap! 👋"""
 )
+
+# st.markdown(
+#     """
+#             #### Welcome to DocSwap! 👋
+
+#             ⏳ DocSwap will officially open once the 2024  internship placements are out.
+
+#             🗣️ DocSwap works better with more people, share it with other doctors going into their first year of Internship!
+
+#             👀 In the meantime, feel free to check out the info tab to see how DocSwap works or reach out [here](https://docs.google.com/forms/d/e/1FAIpQLSfnt0Dq7JBlw-tEUyfVXJueT8aqE3rAcwxoXWWjWi1Jl88gTw/viewform?usp=sf_link) if you have any questions.
+
+
+#             """
+# )
 
 tab1, tab2 = st.tabs(["Swap", "Info"])
 
